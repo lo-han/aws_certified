@@ -317,6 +317,7 @@ The AWS account root user or an administrative user for the account can create I
 
 
 #### Analytics
+- Managed Streaming for Apache Kafka
 - Athena: Query S3 data using SQL
 - QuickSight: Analise empresarial (Business Intelligence). Entenda os recursos por meio de linguagem natural, e paineis interativos
 - Glue: Descubra, prepare e integre todos os seus dados em qualquer escala. Extract, Transform, Load (ETL)
