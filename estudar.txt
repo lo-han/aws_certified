@@ -8,21 +8,8 @@
 - Planos
 
 Services
-- AWS Pricing Calculator
-- AWS Budget
-- AWS DataSync
-- AWS Redshift
-- AWS DocumentDB
-- AWS Snowball
-- AWS CloudSearch
-- AWS Kinesis
-- AWS Polly
 - AWS CodeArtifact
-- AWS Auto Scalling Group
 - AWS CodePipeline
-- AWS Migration Hub
 - AWS Launch Wizard
 - Amazon Detective
 - Amazon MQ
-- AWS SageMaker
-- Amazon EMR
