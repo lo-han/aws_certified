@@ -173,6 +173,7 @@ Options:
 
 - Wavelength: Deploy computers in wavelenght zones (5G) for ultra low latency
 - Batch: Trabalhos otimizados em lote, para Big Data, Execuções Repetidas (Finance Processing), ou ML, por exemplo
+- Lightsail: ????
 
 ### Storage
 
@@ -250,6 +251,44 @@ Capacidade virtualmente ilimitada.
 - AWS Global Accelerator
   - otimiza o caminho para sua aplicação para manter a perda de pacotes, o jitter e a latência consistentemente baixos
   - Global scope
+- Amazon VPN
+
+### Data
+
+#### Databases
+
+#### SQL
+- RDS
+  - Relational Database
+  - Scale Up: More resources
+  - Scale Out: Read and Write Replicas
+  - RDS Proxy (Manages the scalling)
+- Aurora
+  - Fully managed
+  - apenas MySQL e PostgreSQL
+
+#### NoSQL
+- DynamoDB
+- DocumentDB (json)
+- ElastiCache (uses Redis... for caching)
+- Neptune (graphs)
+
+#### Data Warehouse
+
+Big database of highly structured, current and historical, read-only data from multiple sources.
+Uses ETL to get loaded.
+Used for Business Intelligence
+
+- Redshift
+
+#### Datalake
+
+Repository of raw data, historical and current, read-only, from multiple sources, in multiple formats.
+Used to analyze data and gain insights. Or as a cheap option
+
+- (S3)
+- (Athena)
+
 
 ### Segurança e Conformidade
 
@@ -304,6 +343,8 @@ The AWS account root user or an administrative user for the account can create I
   - Collects logs and uses ML to detect threats
 - AWS Detective
   - Extends GuardDuty by automatically creating a graph model of your AWS environment for root cause analysis
+- Amazon Macie
+  - Descubra e proteja seus dados sigilosos em escala
 
 ##### Frontline
 - AWS WAF
@@ -316,6 +357,8 @@ The AWS account root user or an administrative user for the account can create I
 
 ##### Keys and Certificates
 
+- AWS Secrets Manager
+  - gerenciar, recuperar e alternar credenciais de banco de dados, chaves de API e outros segredos ao longo de seus ciclos de vida.
 - AWS Key Management Service (Chaves criptograficas)
 - AWS CloudHSM (Manage Hardware Securit Module encryption keys)
   - Dispositivos Cloud de criptografia, com base em hardware que oferecem funções de gerar e armazenar chaves criptográficas simétricas e assimétricas em infraestruturas de chaves públicas
@@ -361,6 +404,7 @@ The AWS account root user or an administrative user for the account can create I
 - Cloud9 (IDE)
 - CodeGuru (Find most expensive lines of code)
 - CodeCommit -> CodeBuild (and test) -> CodeDeploy
+- CodePipeline
 
 #### Analytics
 
@@ -378,45 +422,16 @@ The AWS account root user or an administrative user for the account can create I
 - Comprehend: Processamento de linguagem natural
 - Polly: Converte artigos em fala humana
 - SageMaker: Build, train, and deploy machine learning (ML) models for any use case with fully managed infrastructure, tools, and workflows
+- Amazon Textract: Extraia automaticamente texto impresso, manuscrito, elementos de layout e dados de qualquer documento
 
 #### Front-end Web and Mobile
 - Farm: Test Android, iOS and Web Apps on real devices in the AWS Cloud, in parallel
 
-## Data Services
+#### Business
 
-### Databases
+- Amazon Connect
+  - Ofereça um atendimento de classe superior ao cliente a um custo menor com uma central de atendimento na nuvem fácil de usar
 
-#### SQL
-- RDS
-  - Relational Database
-  - Scale Up: More resources
-  - Scale Out: Read and Write Replicas
-  - RDS Proxy (Manages the scalling)
-- Aurora
-  - Fully managed
-  - apenas MySQL e PostgreSQL
-
-#### NoSQL
-- DynamoDB
-- DocumentDB (json)
-- ElastiCache (uses Redis... for caching)
-- Neptune (graphs)
-
-### Data Warehouse
-
-Big database of highly structured, current and historical, read-only data from multiple sources.
-Uses ETL to get loaded.
-Used for Business Intelligence
-
-- Redshift
-
-### Datalake
-
-Repository of raw data, historical and current, read-only, from multiple sources, in multiple formats.
-Used to analyze data and gain insights. Or as a cheap option
-
-- (S3)
-- (Athena)
 
 ## Marketplace
 
@@ -449,16 +464,23 @@ Services
 ## Suporte
 
 ### Well Architected Tool
-- Pilares: excelência operacional, segurança, confiabilidade, eficiência de performance, otimização de custos e sustentabilidade (CEOS ES)
+- [Pilares](https://docs.aws.amazon.com/pt_br/wellarchitected/latest/framework/the-pillars-of-the-framework.html): excelência operacional, segurança, confiabilidade, eficiência de performance, otimização de custos e sustentabilidade (CEOS ES)
 - "Teste de Personalidade do Projeto"
-
-### Responsabilidade Compartilhada
-- AWS: Infraestrutura de Serviços e Segurança Física
-- Cliente: Criptografia, Proteção de Tráfego, Configuração de SOs, Redes e Firewalls, Plataformas, Apps, IAM e Dados
 
 ### Trusted Advisor
 - Economizar dinheiro, melhorar a perfomance e ajudar a corrigir falhar de seguranca
 - Security, Performance, Service limits, Cost optimization, Fault tolerance (SCSPF)
+
+### Cloud Adoption Framework
+
+Fornece orientações de práticas recomendadas que ajudam a melhorar sua preparação para a nuvem
+- Negócios, Pessoas, Governança, Plataforma, Segurança e Operações
+- https://aws.amazon.com/pt/cloud-adoption-framework/
+
+### Responsabilidade Compartilhada
+
+- AWS: Infraestrutura de Serviços e Segurança Física
+- Cliente: Criptografia, Proteção de Tráfego, Configuração de SOs, Redes e Firewalls, Plataformas, Apps, IAM e Dados
 
 ### Planos
 - Developer, Business, Enterprise on Ramp, Enterprise
