@@ -88,6 +88,12 @@ Convenção de nome:
 
 https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/instance-types.html
 
+- **Uso geral**: M6a, M6g, M6gd, M6i, M6id, M6idn, M6in, M7a, M7g, M7gd, M7i, M7i-flex e T4g
+- **Otimizadas para computação**: C6a, C6g, C6gd, C6gn, C6i, C6id, C6in, C7a, C7g, C7gd, C7gn, C7i, Hpc6a, Hpc7a, Hpc7g
+- **Computação acelerada**: DL2q, G5g, Inf2, P5, Trn1, Trn1n
+- **Otimizadas para memória**: Hpc6id, R6a, R6g, R6gd, R6i, R6id, R6idn, R6in, R7a, R7g, R7gd, R7i, R7iz, X2gd, X2idn, X2iedn
+- **Otimizadas para armazenamento**: I4g, I4i, Im4gn, Is4gen
+
 ###### By Price
 
 - On-Demand
@@ -112,6 +118,10 @@ https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/instance-types.html
 
 Automaticamente provisiona scale out (horizontal) de instancias EC2.
 
+###### Auto Scaling Group
+
+An Auto Scaling group contains a collection of EC2 instances that are treated as a logical grouping for the purposes of automatic scaling and management. An Auto Scaling group also lets you use Amazon EC2 Auto Scaling features such as health check replacements and scaling policies.
+
 ##### Amazon Machine Images
 
 Os modelos pré-configurados para suas instâncias que empacotam os componentes de que você precisa para seu servidor (incluindo o sistema operacional e software adicional).
@@ -119,7 +129,6 @@ Os modelos pré-configurados para suas instâncias que empacotam os componentes 
 Uma Imagem de máquina da Amazon (AMI) é uma imagem compatível e mantida pela AWS, que fornece as informações necessárias para iniciar uma instância. Especifique uma AMI ao iniciar uma instância. Uma AMI inclui um ou mais snapshots do Amazon Elastic Block Store (Amazon EBS) ou, para AMIs com suporte de armazenamento de instâncias, um modelo para o volume raiz da instância (por exemplo, um sistema operacional, um servidor da aplicação e aplicações).
 
 É possível criar ou utilizar uma imagem.
-
 
 ##### Storage Diagram
 
@@ -179,9 +188,7 @@ Capacidade virtualmente ilimitada.
    - Identificador Exclusivo (Chave)
    - Metadados
 - Cross region replication
-- Transfer Acceleration
-  - para bucket centralizado no mundo todo, ou que transfere altas quantidades
-  - Global scope
+- Transfer Acceleration: para bucket centralizado no mundo todo, ou que transfere altas quantidades
 - Categorias de armazenamento
   - S3 Intelligent Tiering
     - para economia automatica de custos
@@ -240,30 +247,51 @@ Capacidade virtualmente ilimitada.
   - Uses content delivery and edge locations strategy
   - Global scope
 - API Gateway
+- AWS Global Accelerator
+  - otimiza o caminho para sua aplicação para manter a perda de pacotes, o jitter e a latência consistentemente baixos
+  - Global scope
 
 ### Segurança e Conformidade
 
 #### Identity and Access Management
 The AWS account root user or an administrative user for the account can create IAM identities. An IAM identity provides access to an AWS account. An IAM user group is a collection of IAM users managed as a unit. An IAM identity represents a human user or programmatic workload, and can be authenticated and then authorized to perform actions in AWS. Each IAM identity can be associated with one or more policies. Policies determine what actions a user, role, or member of a user group can perform, on which AWS resources, and under what conditions.
   - Organizations and Accounts
-  - Group, Users and Roles
-   - MFA
-   - Access Portal
+  - Identities
+    - Group (cannot be nested)
+    - Users (can belong to multiple groups. not automatic)
+    - Roles
+      - can be assigned to multiple users
+      - Uma função do IAM é uma identidade do IAM que você pode criar em sua conta que tem permissões específicas. Uma função do IAM é semelhante a um usuário do IAM no sentido de que é uma identidade da AWS com políticas de permissão que determinam o que a identidade pode e não pode fazer na AWS. No entanto, em vez de ser exclusivamente associada a uma pessoa, o propósito do perfil é ser assumido por qualquer pessoa que precisar dele. Além disso, um perfil não tem credenciais de longo prazo padrão associadas a ele, como senha ou chaves de acesso. Em vez disso, quando você assumir um perfil, ele fornecerá credenciais de segurança temporárias para sua sessão de perfil.
+      - Você pode usar funções para delegar acesso a usuários, aplicativos ou serviços que normalmente não têm acesso aos seus recursos da AWS. Por exemplo, você pode conceder para os usuários na sua conta da AWS acesso a recursos que normalmente eles não têm ou conceder para os usuários em uma Conta da AWS acesso a recursos em outra conta
   - Policies
   - Global scope
 
+![](iam-terms-2.png)
+
 #### ACLs & Security Groups
 - ACLs: Firewall for VPC Subnets
-- Security Group: Firewall for EC2 Instances
+  - Stateless: necessário especificar tanto uma regra de inbound como outbound para liberar uma porta específica.
+- Security Group: instance-level firewall used for controlling access to AWS resources. Deny by nature.
+  - Statefull: todo o tráfego liberado em um security group tem seu retorno previamente liberado, o que facilita a sua configuração
 
 #### Authentication
-- Key pairs are used for encrypting logon information when accessing EC2 instances
-- Access keys are a combination of an access key ID and a secret access key
-- Server certificates are SSL/TLS certificates that you can use to authenticate with AWS services
-- Security groups are an instance-level firewall used for controlling access to AWS resources
+
+- User and password
+- MFA
+- Access keys:  For API calls. Are a combination of an access key ID and a secret access key.
+- Key pairs: are used for asymmetric or symmetric encrypting
+- Server certificates: are SSL/TLS certificates that you can use to authenticate with AWS services
+
+#### Access portal
+
+- List of all AWS accounts
+- Uses login, user and password authentication
+- Can force MFA
 
 #### Others
 
+- AWS Security Hub:
+  - Automatize verificações de segurança da AWS e centralize alertas de segurança
 - Cognito
   - Gerenciamento de identidades de aplicacoes. Login, por exemplo
 - AWS Artifact
@@ -273,14 +301,17 @@ The AWS account root user or an administrative user for the account can create I
 - AWS Inspector
   - Analise, com base em boas praticas, dos servicos
 - AWS GuardDuty
-  - Threat detection using ML
+  - Collects logs and uses ML to detect threats
+- AWS Detective
+  - Extends GuardDuty by automatically creating a graph model of your AWS environment for root cause analysis
 
 ##### Frontline
 - AWS WAF
   - Firewall
+  - Pode criar **regras de segurança** que controlam o tráfego de bots e **bloqueiam padrões de ataque comuns**, como injeção de SQL ou cross-site scripting (XSS).
   - Global scope
 - AWS Shield
-  - DDoS
+  - **DDoS**
   - Global scope
 
 ##### Keys and Certificates
@@ -294,8 +325,23 @@ The AWS account root user or an administrative user for the account can create I
 
 ### Outros
 
+#### Migration
+
+- AWS Application Discovery Service (gather information about on-premises data centers)
+- AWS Application Migration Service (minimizes time-intensive, error-prone manual processes by automatically converting your source servers from physical, virtual, or cloud infrastructure to run natively on AWS)
+- AWS Data Migration Service (migration from database to database)
+- AWS Mainframe Modernization Service
+- AWS Migration Hub (provides a single location to track the progress of application migrations across multiple AWS and partner solutions)
+- AWS Snow Family (edge computing, edge storage, and data transfer devices. Non-data center environments, and in locations where there's lack of consistent network connectivity. For IoT in extreme conditions, for example)
+  - [Snowcone](https://aws.amazon.com/snowcone/)
+  - Snowball
+  - Snowmobile
+- AWS DataSync (migration from storage to storage)
+- AWS Transfer Family (file transfer. SFTP)
+
 #### Application Integration
 
+- Amazon MQ (low latency publisher/subscriber agent)
 - EventBridge
   - Bus: Roteador de eventos de uma fonte para um ou mais destinos (lambdas)
   - Pipes: Conexoes de uma fonte para um destino (Lambda)
@@ -305,32 +351,42 @@ The AWS account root user or an administrative user for the account can create I
 - Step Functions (serviço de orquestração de fluxo de trabalho que facilita a criação e a coordenação de aplicativos distribuídos e baseados em serviços. Ele permite criar fluxos de trabalho visualmente, definindo passos individuais como funções Lambda, tarefas de ECS, atividades de data pipeline, entre outros)
 
 #### Gerenciamento
-   - CloudFormation
-   - CloudWatch (registro de servicos)
-   - CloudTrail (registro de eventos de utilizacao)
-   - Config (rastreia alterações em recursos, registra conformidade com políticas e cria snapshots do estado da infraestrutura ao longo do tempo)
+- CloudFormation
+- AWS Organizations (permite criar novas contas da AWS sem custo adicional.Pode facilmente alocar recursos, agrupar contas e aplicar políticas de governança a contas ou grupos)
+- CloudWatch (registro de servicos)
+- CloudTrail (registro de eventos de utilizacao)
+- Config (rastreia alterações em recursos, registra conformidade com políticas e cria snapshots do estado da infraestrutura ao longo do tempo)
 
 #### Developer Tools
-   - Cloud9 (IDE)
-   - CodeGuru (Find most expensive lines of code)
-   - CodeCommit -> CodeBuild (and test) -> CodeDeploy
-
+- Cloud9 (IDE)
+- CodeGuru (Find most expensive lines of code)
+- CodeCommit -> CodeBuild (and test) -> CodeDeploy
 
 #### Analytics
-- Managed Streaming for Apache Kafka
+
+- Amazon EMR (big data mapReduce)
+- Managed Streaming for Apache Kafka (AWS MSK)
 - Athena: Query S3 data using SQL
 - QuickSight: Analise empresarial (Business Intelligence). Entenda os recursos por meio de linguagem natural, e paineis interativos
 - Glue: Descubra, prepare e integre todos os seus dados em qualquer escala. Extract, Transform, Load (ETL)
+- Kinesis: Processa e analisa de forma econômica os dados de streaming em qualquer escala como um serviço totalmente gerenciado. Consome dados em tempo real como vídeo, áudio, logs de aplicações, clickstreams de sites e dados de telemetria de IoT para machine learning (ML), análises e outras aplicações.
+- CloudSearch: search solution for your website or application. Large collections of data such as web pages, document files, forum posts, or product information
 
 #### Machine Learning
 - Transcribe: Automatic speech recognition
 - Lex: Build voice and text chatbots
 - Comprehend: Processamento de linguagem natural
+- Polly: Converte artigos em fala humana
+- SageMaker: Build, train, and deploy machine learning (ML) models for any use case with fully managed infrastructure, tools, and workflows
 
 #### Front-end Web and Mobile
 - Farm: Test Android, iOS and Web Apps on real devices in the AWS Cloud, in parallel
 
-## Services: Databases & Migration
+## Data Services
+
+### Databases
+
+#### SQL
 - RDS
   - Relational Database
   - Scale Up: More resources
@@ -339,10 +395,28 @@ The AWS account root user or an administrative user for the account can create I
 - Aurora
   - Fully managed
   - apenas MySQL e PostgreSQL
+
+#### NoSQL
 - DynamoDB
+- DocumentDB (json)
 - ElastiCache (uses Redis... for caching)
-- Data Migration Service (DMS)
 - Neptune (graphs)
+
+### Data Warehouse
+
+Big database of highly structured, current and historical, read-only data from multiple sources.
+Uses ETL to get loaded.
+Used for Business Intelligence
+
+- Redshift
+
+### Datalake
+
+Repository of raw data, historical and current, read-only, from multiple sources, in multiple formats.
+Used to analyze data and gain insights. Or as a cheap option
+
+- (S3)
+- (Athena)
 
 ## Marketplace
 
@@ -369,6 +443,8 @@ How do you pay?
 Services
    - Total Cost of Ownership calculator
    - Cost Explorer (Visualize, Understand and Manage costs)
+   - AWS Pricing Calculator (Cost estimate with no commitment, and explore AWS services and pricing for your architecture needs)
+   - AWS Budget (personalize as medidas de gastos, rastreie e seja notificado, defina e inicie cortes de gastos)
 
 ## Suporte
 
