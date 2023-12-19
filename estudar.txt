@@ -2,22 +2,20 @@
 - AWS IAM!!!!
 - Segurança!!!!
 - Well Architected!!!!
-
-- Planos
 - S3 public, private, URLs...
-
 - Congestionamento
-- WAF vs Shield
+- DDoS: WAF vs Shield e CloudFront
+- Planos
 
 Services
+- AWS Pricing Calculator
+- AWS Budget
 - AWS DataSync
 - AWS Redshift
 - AWS DocumentDB
 - AWS Snowball
-
 - AWS CloudSearch
 - AWS Kinesis
-
 - AWS Polly
 - AWS CodeArtifact
 - AWS Auto Scalling Group
@@ -26,10 +24,5 @@ Services
 - AWS Launch Wizard
 - Amazon Detective
 - Amazon MQ
-
-
 - AWS SageMaker
 - Amazon EMR
-
-- AWS Pricing Calculator
-- AWS Budget
