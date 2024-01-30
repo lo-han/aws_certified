@@ -492,3 +492,9 @@ Fornece orientações de práticas recomendadas que ajudam a melhorar sua prepar
 
 - Personal Health
 - Service Health
+
+## Leitura adicional
+
+- https://medium.com/google-cloud/kubernetes-101-pods-nodes-containers-and-clusters-c1509e409e16
+- https://kubernetes.io/docs/concepts/services-networking/service/
+- https://medium.com/@prateekbansalind/demystifying-kubernetes-service-types-clusterip-nodeport-and-loadbalancer-88fb0c065ce9
