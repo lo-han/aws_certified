@@ -44,6 +44,64 @@
 
 ## Services
 
+
+### Storage
+
+#### Simple Storage Service (S3)
+
+Usado para objetos, pode guardar static web sites, assets, disaster recovery e backups.
+Its object oriented, different from EFS, that is highly hierarchical. It makes easier for
+services like Athena to query objects due this feature.
+Capacidade virtualmente ilimitada.
+
+- Composicao
+   - Arquivo (Valor)
+   - Identificador Exclusivo (Chave)
+   - Metadados
+- Cross region replication
+- Transfer Acceleration: para bucket centralizado no mundo todo, ou que transfere altas quantidades
+- Categorias de armazenamento
+  - S3 Intelligent Tiering
+    - para economia automatica de custos
+  - S3 Standard
+    - para dados acessados com frequencia
+  - S3 Express One Zone
+    - para dados acessados com mais frequencia
+  - S3 Infrequent Access
+    - para dados acessados com menos frequencia
+- Backup, Arquivamentos e Recuperacao de Desastres
+  - Glacier
+    - para grande conjunto de dados
+    - nao querer acesso imediato. 1 a 2 vezes por ano, de forma assincrona
+  - Glacier Instant Retrieval
+  - Glacier Deep Archive
+    - retencao maior. De 7 a 10 anos
+    - recuperacao em horas
+- Storage lifecycle
+  - Transition actions
+  - Expiration (removal) actions
+
+#### Elastic Block Store (EBS)
+
+- In conjunction with EC2, it works as a hard drive. Data in EBS is stored in equally sized blocks.
+- Can be used for snapshots, for example.
+- It's very perfomatic, available and easialy backup and restoration
+- Has low latency
+
+#### Elastic File System
+
+- In conjunction with EC2, it can be mounted for multiple instances. Its very scalable.
+
+#### Storage Gateway
+
+- Hybrid comuting storage integration
+- Uses direct connect encrypted
+
+#### Backup
+
+- https://docs.aws.amazon.com/aws-backup/
+
+
 ### Computing
 
 #### EC2
@@ -174,62 +232,6 @@ Options:
 - Wavelength: Deploy computers in wavelenght zones (5G) for ultra low latency
 - Batch: Trabalhos otimizados em lote, para Big Data, Execuções Repetidas (Finance Processing), ou ML, por exemplo
 - Lightsail: ????
-
-### Storage
-
-#### Simple Storage Service (S3)
-
-Usado para objetos, pode guardar static web sites, assets, disaster recovery e backups.
-Its object oriented, different from EFS, that is highly hierarchical. It makes easier for
-services like Athena to query objects due this feature.
-Capacidade virtualmente ilimitada.
-
-- Composicao
-   - Arquivo (Valor)
-   - Identificador Exclusivo (Chave)
-   - Metadados
-- Cross region replication
-- Transfer Acceleration: para bucket centralizado no mundo todo, ou que transfere altas quantidades
-- Categorias de armazenamento
-  - S3 Intelligent Tiering
-    - para economia automatica de custos
-  - S3 Standard
-    - para dados acessados com frequencia
-  - S3 Express One Zone
-    - para dados acessados com mais frequencia
-  - S3 Infrequent Access
-    - para dados acessados com menos frequencia
-- Backup, Arquivamentos e Recuperacao de Desastres
-  - Glacier
-    - para grande conjunto de dados
-    - nao querer acesso imediato. 1 a 2 vezes por ano, de forma assincrona
-  - Glacier Instant Retrieval
-  - Glacier Deep Archive
-    - retencao maior. De 7 a 10 anos
-    - recuperacao em horas
-- Storage lifecycle
-  - Transition actions
-  - Expiration (removal) actions
-
-#### Elastic Block Store (EBS)
-
-- In conjunction with EC2, it works as a hard drive. Data in EBS is stored in equally sized blocks.
-- Can be used for snapshots, for example.
-- It's very perfomatic, available and easialy backup and restoration
-- Has low latency
-
-#### Elastic File System
-
-- In conjunction with EC2, it can be mounted for multiple instances. Its very scalable.
-
-#### Storage Gateway
-
-- Hybrid comuting storage integration
-- Uses direct connect encrypted
-
-#### Backup
-
-- https://docs.aws.amazon.com/aws-backup/
 
 ### Network
 - VPC and Subnets
